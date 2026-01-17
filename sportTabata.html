@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер Функциональной Тренировки</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white; min-height: 100vh; padding: 20px; transition: all 0.3s ease;
+        }
+        body.fullscreen { padding: 0; }
+        .container {
+            max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        body.fullscreen .container {
+            max-width: 100%; height: 100vh; border-radius: 0; padding: 20px;
+            display: flex; flex-direction: column;
+        }
+        .header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center; margin-bottom: 10px; color: #ff6b6b;
+            font-size: 2.5rem; flex-grow: 1;
+        }
+        body.fullscreen h1 { font-size: 2.2rem; }
+        .subtitle {
+            text-align: center; color: #4ecdc4; margin-bottom: 30px; font-size: 1.2rem;
+        }
+        .fullscreen-btn {
+            background: #4ecdc4; color: white; border: none; border-radius: 10px;
+            width: 40px; height: 40px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 1.2rem;
+            transition: all 0.3s ease; margin-left: 10px;
+        }
+        .fullscreen-btn:hover { background: #3dbcb3; transform: scale(1.1); }
+        .control-panel {
+            background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 20px;
+            margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 15px;
+            justify-content: center; align-items: center;
+        }
+        .control-group { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        label { font-size: 0.9rem; color: #ffd166; }
+        select, button {
+            padding: 12px 20px; border: none; border-radius: 10px;
+            font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+        }
+        select { background: #2c3e50; color: white; min-width: 150px; }
+        .action-btn {
+            background: #ff6b6b; color: white; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; min-width: 120px;
+        }
+        .action-btn:hover {
+            background: #ff5252; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        .action-btn:disabled {
+            background: #6c757d; cursor: not-allowed; transform: none; box-shadow: none;
+        }
+        .timer-display {
+            text-align: center; margin-bottom: 30px; padding: 30px;
+            background: rgba(0, 0, 0, 0.5); border-radius: 15px; border: 3px solid #4ecdc4;
+            flex-grow: 1; display: flex; flex-direction: column; justify-content: center;
+        }
+        body.fullscreen .timer-display { padding: 20px; margin-bottom: 20px; }
+        .time {
+            font-size: 5rem; font-weight: bold; margin-bottom: 10px; color: #4ecdc4;
+            text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+        body.fullscreen .time { font-size: 6rem; }
+        .exercise-info {
+            font-size: 1.8rem; color: #ffd166; margin-bottom: 10px; min-height: 60px;
+        }
+        body.fullscreen .exercise-info { font-size: 2.2rem; }
+        .phase-info { font-size: 1.2rem; color: #ff9e6d; margin-bottom: 5px; }
+        body.fullscreen .phase-info { font-size: 1.5rem; }
+        .circle-info { font-size: 1.1rem; color: #a3b5cc; }
+        body.fullscreen .circle-info { font-size: 1.3rem; }
+        .status {
+            font-size: 1.5rem; color: #ff9e6d; text-align: center; margin-top: 20px;
+            min-height: 30px;
+        }
+        body.fullscreen .status { font-size: 1.8rem; }
+        .workout-list {
+            background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 20px;
+            margin-top: 30px;
+        }
+        body.fullscreen .workout-list { margin-top: 0; }
+        .workout-list h3 { color: #4ecdc4; margin-bottom: 15px; text-align: center; }
+        .exercise-item {
+            padding: 10px 15px; margin: 5px 0; background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px; display: flex; justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .exercise-item.active {
+            background: rgba(78, 205, 196, 0.3); border-left: 4px solid #4ecdc4;
+            transform: translateX(5px);
+        }
+        .exercise-item.completed { opacity: 0.7; color: #a3b5cc; }
+        .volume-control { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+        .volume-control input { flex-grow: 1; }
+        .keep-alive-info {
+            position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px; border-radius: 10px; font-size: 0.9rem; color: #ffd166;
+            display: none; z-index: 1000; border: 1px solid #ffd166;
+        }
+        .keep-alive-info.active { display: block; }
+        .keep-alive-info.wakelock { color: #4ecdc4; border-color: #4ecdc4; }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .time { font-size: 3.5rem; }
+            body.fullscreen .time { font-size: 4.5rem; }
+            .exercise-info { font-size: 1.4rem; }
+            body.fullscreen .exercise-info { font-size: 1.8rem; }
+            .control-panel { flex-direction: column; }
+        }
+        @media (max-height: 800px) and (orientation: landscape) {
+            body.fullscreen .container { padding: 10px; }
+            body.fullscreen .timer-display { padding: 10px; }
+            body.fullscreen .time { font-size: 4rem; }
+            body.fullscreen .exercise-info { font-size: 1.6rem; min-height: 40px; }
+            .workout-list { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="keep-alive-info" id="keepAliveInfo">🔋 Экран активен</div>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Функциональный Жиросжигатель</h1>
+            <button class="fullscreen-btn" id="fullscreenBtn" title="Полноэкранный режим">⛶</button>
+        </div>
+        <div class="subtitle">Таймер тренировки с голосовыми оповещениями</div>
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="circles">Количество кругов:</label>
+                <select id="circles">
+                    <option value="3">3 круга</option><option value="4">4 круга</option>
+                    <option value="5" selected>5 кругов</option><option value="6">6 кругов</option>
+                    <option value="7">7 кругов</option><option value="8">8 кругов</option>
+                    <option value="9">9 кругов</option>
+                </select>
+            </div>
+            <button class="action-btn" id="startBtn">▶ Старт</button>
+            <button class="action-btn" id="pauseBtn" disabled>⏸ Пауза</button>
+            <button class="action-btn" id="resetBtn">🔄 Сброс</button>
+            <div class="volume-control">
+                <span>🔊</span><input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+                <span id="volumeValue">100%</span>
+            </div>
+        </div>
+        <div class="timer-display">
+            <div class="time" id="timer">45</div>
+            <div class="exercise-info" id="exerciseName">Джамп джек</div>
+            <div class="phase-info" id="phase">Работа</div>
+            <div class="circle-info" id="circleInfo">Круг: 1/5</div>
+        </div>
+        <div class="status" id="status">Готов к началу тренировки</div>
+        <div class="workout-list">
+            <h3>Упражнения в круге:</h3>
+            <div id="exercisesList"></div>
+        </div>
+    </div>
+
+    <script>
+        // ================= КОНФИГУРАЦИЯ ТРЕНИРОВКИ =================
+        const workoutConfig = {
+            workTime: 45, restTime: 15, circleRestTime: 60, countdownTime: 5
+        };
+        const exercises = [
+            "Джамп джек", "Подтягивания (или Австралийские)", "Бёрпи", "Отжимания",
+            "Приседания с выпрыгиванием", "Велосипед", "Альпинист Cross-body",
+            "Выпады с места", "Рукоход в планке"
+        ];
+
+        // ================= ПЕРЕМЕННЫЕ СОСТОЯНИЯ =================
+        let currentTime = workoutConfig.workTime;
+        let isRunning = false, isPaused = false;
+        let currentPhase = 'work';
+        let currentExerciseIndex = 0, currentCircle = 1, totalCircles = 5;
+        let timerInterval = null, countdownActive = false, speechVolume = 1;
+        let isFullscreen = false, wakeLock = null, mouseKeepAliveInterval = null;
+        const wakeLockSupported = 'wakeLock' in navigator;
+
+        // ================= ЭЛЕМЕНТЫ DOM =================
+        const timerElement = document.getElementById('timer');
+        const exerciseNameElement = document.getElementById('exerciseName');
+        const phaseElement = document.getElementById('phase');
+        const circleInfoElement = document.getElementById('circleInfo');
+        const statusElement = document.getElementById('status');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const circlesSelect = document.getElementById('circles');
+        const exercisesListElement = document.getElementById('exercisesList');
+        const volumeSlider = document.getElementById('volume');
+        const volumeValue = document.getElementById('volumeValue');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const keepAliveInfo = document.getElementById('keepAliveInfo');
+
+        // ================= МЕХАНИЗМЫ ПОДДЕРЖАНИЯ АКТИВНОСТИ =================
+        // === 1. МЕТОД "ПЕРИОДИЧЕСКОЙ ПОДВИЖНОСТИ" (НЕНАДЕЖНЫЙ БЕЗ HTTPS) ===
+        function startMouseMoveKeepAlive() {
+            console.log('[DEBUG] Запуск метода "периодической подвижности"');
+            if (mouseKeepAliveInterval) {
+                console.log('[DEBUG] Метод уже запущен');
+                return;
+            }
+            
+            // Создаем микро-события перемещения мыши каждые 10 секунд
+            mouseKeepAliveInterval = setInterval(() => {
+                // Генерируем случайные координаты в небольшом диапазоне
+                const x = Math.floor(Math.random() * 3); // 0, 1 или 2
+                const y = Math.floor(Math.random() * 3);
+                
+                console.log(`[DEBUG] Отправка события mousemove (x: ${x}, y: ${y})`);
+                
+                // Создаем и отправляем событие перемещения мыши
+                const mouseEvent = new MouseEvent('mousemove', {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: x,
+                    clientY: y
+                });
+                
+                window.dispatchEvent(mouseEvent);
+                
+                // Дополнительно: можно также эмулировать другие события для большей надежности
+                const touchEvent = new TouchEvent('touchmove', {
+                    bubbles: true,
+                    cancelable: true,
+                    touches: [new Touch({
+                        identifier: Date.now(),
+                        target: document.body,
+                        clientX: x,
+                        clientY: y
+                    })]
+                });
+                document.body.dispatchEvent(touchEvent);
+                
+            }, 10000); // Интервал 10 секунд
+            
+            keepAliveInfo.textContent = '🔋 Экран активен (Мышь)';
+            keepAliveInfo.classList.remove('wakelock');
+            keepAliveInfo.classList.add('active');
+        }
+
+        function stopMouseMoveKeepAlive() {
+            console.log('[DEBUG] Остановка метода "периодической подвижности"');
+            if (mouseKeepAliveInterval) {
+                clearInterval(mouseKeepAliveInterval);
+                mouseKeepAliveInterval = null;
+                keepAliveInfo.classList.remove('active');
+            }
+        }
+
+        // === 2. WAKE LOCK API (РАБОТАЕТ ТОЛЬКО НА LOCALHOST/HTTPS) ===
+        async function requestWakeLock() {
+            console.log('[DEBUG] Попытка запроса Wake Lock...');
+            console.log('[DEBUG] Wake Lock доступен?', wakeLockSupported);
+            console.log('[DEBUG] Протокол:', window.location.protocol);
+            
+            // Проверяем, находимся ли мы в безопасном контексте (https: или localhost)
+            const isSecureContext = window.isSecureContext || 
+                                   window.location.protocol === 'https:' || 
+                                   window.location.hostname === 'localhost' ||
+                                   window.location.hostname === '127.0.0.1';
+            
+            console.log('[DEBUG] Безопасный контекст?', isSecureContext);
+            
+            // Пытаемся использовать Wake Lock API если доступен и мы в безопасном контексте
+            if (wakeLockSupported && isSecureContext) {
+                try {
+                    if (wakeLock !== null) {
+                        console.log('[DEBUG] Wake Lock уже активен');
+                        return;
+                    }
+                    
+                    console.log('[DEBUG] Запрашиваем Wake Lock...');
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    
+                    console.log('[DEBUG] Wake Lock успешно активирован');
+                    keepAliveInfo.textContent = '🔋 Экран активен (Wake Lock)';
+                    keepAliveInfo.classList.add('active', 'wakelock');
+                    
+                    // Обработка автоматического освобождения
+                    wakeLock.addEventListener('release', () => {
+                        console.log('[DEBUG] Wake Lock был освобожден системой');
+                        keepAliveInfo.classList.remove('active');
+                        wakeLock = null;
+                        
+                        // Если тренировка еще идет, пытаемся переключиться на метод мыши
+                        if (isRunning && !isPaused) {
+                            console.log('[DEBUG] Переключаемся на метод мыши после освобождения Wake Lock');
+                            startMouseMoveKeepAlive();
+                        }
+                    });
+                    
+                    return; // Успешно использовали Wake Lock
+                    
+                } catch (err) {
+                    console.error('[DEBUG] Ошибка Wake Lock:', err.name, err.message);
+                    keepAliveInfo.textContent = '⚠ Wake Lock ошибка';
+                    keepAliveInfo.style.color = '#ff6b6b';
+                    setTimeout(() => {
+                        keepAliveInfo.style.color = '';
+                    }, 3000);
+                }
+            }
+            
+            // Если Wake Lock не доступен или произошла ошибка, используем метод мыши
+            console.log('[DEBUG] Используем метод "периодической подвижности"');
+            startMouseMoveKeepAlive();
+        }
+
+        async function releaseKeepAlive() {
+            console.log('[DEBUG] Освобождение всех механизмов keep-alive');
+            
+            // Останавливаем метод мыши
+            stopMouseMoveKeepAlive();
+            
+            // Освобождаем Wake Lock если он активен
+            if (wakeLock !== null) {
+                try {
+                    await wakeLock.release();
+                    wakeLock = null;
+                    console.log('[DEBUG] Wake Lock освобожден');
+                } catch (err) {
+                    console.error('[DEBUG] Ошибка при освобождении Wake Lock:', err);
+                }
+            }
+            
+            keepAliveInfo.classList.remove('active');
+        }
+
+        // ================= ОСНОВНАЯ ЛОГИКА ТРЕНИРОВКИ =================
+        async function startWorkout() {
+            if (isRunning) return;
+            
+            console.log('[DEBUG] === НАЧАЛО ТРЕНИРОВКИ ===');
+            console.log('[DEBUG] Протокол:', window.location.protocol);
+            console.log('[DEBUG] Wake Lock доступен?', wakeLockSupported);
+            console.log('[DEBUG] Безопасный контекст?', window.isSecureContext);
+            
+            isRunning = true;
+            isPaused = false;
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            statusElement.textContent = 'Тренировка началась!';
+            statusElement.style.color = '#4ecdc4';
+            
+            // Запускаем механизм поддержания активности экрана
+            await requestWakeLock();
+            
+            speak("Начинаем тренировку! Первое упражнение: " + exercises[currentExerciseIndex]);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        async function togglePause() {
+            if (!isRunning) return;
+            
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                clearInterval(timerInterval);
+                pauseBtn.textContent = '▶ Продолжить';
+                statusElement.textContent = 'Пауза';
+                statusElement.style.color = '#ffd166';
+                speak("Пауза");
+                
+                // Освобождаем механизм поддержания активности
+                await releaseKeepAlive();
+            } else {
+                timerInterval = setInterval(updateTimer, 1000);
+                pauseBtn.textContent = '⏸ Пауза';
+                statusElement.textContent = 'Продолжаем тренировку';
+                statusElement.style.color = '#4ecdc4';
+                speak("Продолжаем");
+                
+                // Запрашиваем механизм поддержания активности снова
+                await requestWakeLock();
+            }
+        }
+
+        async function resetWorkout() {
+            console.log('[DEBUG] === СБРОС ТРЕНИРОВКИ ===');
+            clearInterval(timerInterval);
+            
+            currentTime = workoutConfig.workTime;
+            isRunning = false;
+            isPaused = false;
+            currentPhase = 'work';
+            currentExerciseIndex = 0;
+            currentCircle = 1;
+            countdownActive = false;
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            pauseBtn.textContent = '⏸ Пауза';
+            
+            statusElement.textContent = 'Готов к началу тренировки';
+            statusElement.style.color = '#ff9e6d';
+            
+            // Освобождаем механизм поддержания активности
+            await releaseKeepAlive();
+            
+            updateDisplay();
+            speak("Тренировка сброшена");
+        }
+
+        function updateTimer() {
+            if (isPaused) return;
+            
+            if (currentTime <= workoutConfig.countdownTime && currentTime > 0) {
+                if (!countdownActive) countdownActive = true;
+                speakCountdown(currentTime);
+            } else {
+                countdownActive = false;
+            }
+            
+            currentTime--;
+            
+            if (currentTime <= 0) {
+                handleTimerComplete();
+            }
+            
+            updateDisplay();
+        }
+
+        function handleTimerComplete() {
+            countdownActive = false;
+            
+            switch(currentPhase) {
+                case 'work':
+                    speak("Упражнение завершено");
+                    
+                    if (currentExerciseIndex === exercises.length - 1) {
+                        if (currentCircle === totalCircles) {
+                            completeWorkout();
+                            return;
+                        } else {
+                            currentPhase = 'circleRest';
+                            currentTime = workoutConfig.circleRestTime;
+                        }
+                    } else {
+                        currentPhase = 'rest';
+                        currentTime = workoutConfig.restTime;
+                    }
+                    break;
+                    
+                case 'rest':
+                    currentExerciseIndex++;
+                    currentPhase = 'work';
+                    currentTime = workoutConfig.workTime;
+                    speakExerciseStart();
+                    break;
+                    
+                case 'circleRest':
+                    currentCircle++;
+                    currentExerciseIndex = 0;
+                    currentPhase = 'work';
+                    currentTime = workoutConfig.workTime;
+                    
+                    if (currentCircle <= totalCircles) {
+                        speak(`Начинаем ${currentCircle} круг`);
+                        speakExerciseStart();
+                    }
+                    break;
+            }
+            
+            updateDisplay();
+        }
+
+        async function completeWorkout() {
+            console.log('[DEBUG] === ЗАВЕРШЕНИЕ ТРЕНИРОВКИ ===');
+            clearInterval(timerInterval);
+            isRunning = false;
+            
+            statusElement.textContent = '🎉 Тренировка завершена! Отличная работа!';
+            statusElement.style.color = '#ffd166';
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            
+            // Освобождаем механизм поддержания активности
+            await releaseKeepAlive();
+            
+            document.querySelectorAll('.exercise-item').forEach(item => {
+                item.classList.add('completed');
+            });
+            
+            speak("Тренировка завершена! Отличная работа! Вы проделали огромный труд!");
+        }
+
+        // ================= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =================
+        function init() {
+            console.log('[DEBUG] Инициализация приложения...');
+            console.log('[DEBUG] Протокол:', window.location.protocol);
+            console.log('[DEBUG] Безопасный контекст?', window.isSecureContext);
+            console.log('[DEBUG] Wake Lock доступен?', wakeLockSupported);
+            
+            // Если мы не в безопасном контексте, показываем предупреждение
+            if (!window.isSecureContext && window.location.protocol !== 'file:') {
+                statusElement.innerHTML = '⚠ Для полной функциональности откройте через <code>localhost</code> (см. инструкцию)';
+                statusElement.style.color = '#ff6b6b';
+            }
+            
+            totalCircles = parseInt(circlesSelect.value);
+            updateExerciseList();
+            updateDisplay();
+            
+            startBtn.addEventListener('click', startWorkout);
+            pauseBtn.addEventListener('click', togglePause);
+            resetBtn.addEventListener('click', resetWorkout);
+            
+            circlesSelect.addEventListener('change', () => {
+                totalCircles = parseInt(circlesSelect.value);
+                updateCircleInfo();
+            });
+            
+            volumeSlider.addEventListener('input', (e) => {
+                speechVolume = parseFloat(e.target.value);
+                volumeValue.textContent = `${Math.round(speechVolume * 100)}%`;
+            });
+            
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            
+            const fullscreenEvents = ['fullscreenchange', 'webkitfullscreenchange', 
+                                     'mozfullscreenchange', 'MSFullscreenChange'];
+            fullscreenEvents.forEach(event => {
+                document.addEventListener(event, updateFullscreenButton);
+            });
+            
+            if (!('speechSynthesis' in window)) {
+                statusElement.textContent = 'Внимание: Ваш браузер не поддерживает голосовые оповещения';
+                statusElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function updateExerciseList() {
+            exercisesListElement.innerHTML = '';
+            exercises.forEach((exercise, index) => {
+                const div = document.createElement('div');
+                div.className = 'exercise-item';
+                div.id = `exercise-${index}`;
+                div.innerHTML = `<span>${index + 1}. ${exercise}</span><span>45 сек</span>`;
+                exercisesListElement.appendChild(div);
+            });
+        }
+
+        function updateActiveExercise() {
+            document.querySelectorAll('.exercise-item').forEach(item => {
+                item.classList.remove('active', 'completed');
+            });
+            
+            for (let i = 0; i < currentExerciseIndex; i++) {
+                const item = document.getElementById(`exercise-${i}`);
+                if (item) item.classList.add('completed');
+            }
+            
+            const currentItem = document.getElementById(`exercise-${currentExerciseIndex}`);
+            if (currentItem) currentItem.classList.add('active');
+        }
+
+        function updateDisplay() {
+            timerElement.textContent = currentTime;
+            exerciseNameElement.textContent = exercises[currentExerciseIndex];
+            phaseElement.textContent = getPhaseText(currentPhase);
+            updateCircleInfo();
+            updateActiveExercise();
+        }
+
+        function getPhaseText(phase) {
+            switch(phase) {
+                case 'work': return 'Работа';
+                case 'rest': return 'Отдых';
+                case 'circleRest': return 'Отдых между кругами';
+                default: return '';
+            }
+        }
+
+        function updateCircleInfo() {
+            circleInfoElement.textContent = `Круг: ${currentCircle}/${totalCircles}`;
+        }
+
+        function speak(text) {
+            if (!('speechSynthesis' in window)) return;
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ru-RU';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            utterance.volume = speechVolume;
+            
+            const voices = speechSynthesis.getVoices();
+            const russianVoice = voices.find(voice => 
+                voice.lang.includes('ru') || voice.lang.includes('RU'));
+            
+            if (russianVoice) utterance.voice = russianVoice;
+            speechSynthesis.speak(utterance);
+        }
+
+        function speakCountdown(seconds) {
+            if (seconds > 0 && seconds <= 5) speak(seconds.toString());
+        }
+
+        function speakExerciseStart() {
+            if (currentPhase === 'work') {
+                speak(`Начинаем ${exercises[currentExerciseIndex]}`);
+            } else if (currentPhase === 'rest') {
+                if (currentExerciseIndex === exercises.length - 1) {
+                    speak("Отдых перед следующим кругом");
+                } else {
+                    speak("Отдых");
+                }
+            } else if (currentPhase === 'circleRest') {
+                speak("Отдых между кругами");
+            }
+        }
+
+        // ================= ПОЛНОЭКРАННЫЙ РЕЖИМ =================
+        function toggleFullscreen() {
+            if (!isFullscreen) {
+                enterFullscreen();
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        function enterFullscreen() {
+            const element = document.documentElement;
+            if (element.requestFullscreen) element.requestFullscreen();
+            else if (element.mozRequestFullScreen) element.mozRequestFullScreen();
+            else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+            else if (element.msRequestFullscreen) element.msRequestFullscreen();
+        }
+
+        function exitFullscreen() {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            else if (document.msExitFullscreen) document.msExitFullscreen();
+        }
+
+        function updateFullscreenButton() {
+            const fullscreenElement = document.fullscreenElement || 
+                document.webkitFullscreenElement || 
+                document.mozFullScreenElement || 
+                document.msFullscreenElement;
+            isFullscreen = !!fullscreenElement;
+            
+            if (isFullscreen) {
+                fullscreenBtn.innerHTML = '⛶';
+                fullscreenBtn.title = 'Выйти из полноэкранного режима';
+                document.body.classList.add('fullscreen');
+            } else {
+                fullscreenBtn.innerHTML = '⛶';
+                fullscreenBtn.title = 'Полноэкранный режим';
+                document.body.classList.remove('fullscreen');
+            }
+        }
+
+        // ================= ОБРАБОТЧИКИ СОБЫТИЙ =================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isFullscreen) setTimeout(updateFullscreenButton, 100);
+            
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isRunning) togglePause(); else startWorkout();
+            }
+            
+            if (e.code === 'KeyR' && e.ctrlKey) {
+                e.preventDefault();
+                resetWorkout();
+            }
+            
+            if (e.code === 'KeyF') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+
+        // Восстановление активности при возврате на вкладку
+        document.addEventListener('visibilitychange', async () => {
+            console.log('[DEBUG] Изменение видимости:', document.visibilityState);
+            
+            if (document.visibilityState === 'visible' && isRunning && !isPaused) {
+                console.log('[DEBUG] Восстанавливаем активность экрана...');
+                try {
+                    await requestWakeLock();
+                } catch (err) {
+                    console.error('[DEBUG] Не удалось восстановить активность экрана:', err);
+                }
+            }
+        });
+
+        // ================= ИНИЦИАЛИЗАЦИЯ =================
+        window.addEventListener('DOMContentLoaded', init);
+        
+        speechSynthesis.getVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {
+                console.log('[DEBUG] Голоса TTS загружены');
+            };
+        }
+        
+        window.addEventListener('beforeunload', () => {
+            console.log('[DEBUG] Очистка перед закрытием страницы');
+            if (wakeLock !== null) wakeLock.release();
+            if (mouseKeepAliveInterval) clearInterval(mouseKeepAliveInterval);
+        });
+        
+        // Отображение текущего статуса безопасности
+        console.log('========================================');
+        console.log('СТАТУС БЕЗОПАСНОСТИ:');
+        console.log('Протокол:', window.location.protocol);
+        console.log('Безопасный контекст?', window.isSecureContext);
+        console.log('Wake Lock доступен?', wakeLockSupported);
+        console.log('Hostname:', window.location.hostname);
+        console.log('========================================');
+    </script>
+</body>
+</html>

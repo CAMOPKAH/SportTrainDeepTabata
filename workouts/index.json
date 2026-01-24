@@ -1,0 +1,17 @@
+{
+  "programs": [
+    {
+      "id": "functional-burner",
+      "name": "Функциональный Жиросжигатель",
+      "description": "Интенсивная тренировка для сжигания жира с элементами кардио и силы.",
+      "url": "https://raw.githubusercontent.com/CAMOPKAH/SportTrainDeepTabata/main/workouts/functional-burner.json"
+    },
+    {
+      "id": "cardio-blast",
+      "name": "Кардио-Взрыв",
+      "description": "Высокоинтенсивная кардио-тренировка для выносливости.",
+      "url": "https://raw.githubusercontent.com/CAMOPKAH/SportTrainDeepTabata/main/workouts/cardio-blast.json"
+    }
+  
+  ]
+}

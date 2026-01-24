@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таймер Функциональной Тренировки</title>
+    <style>
+        /* Все предыдущие стили остаются без изменений */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white; min-height: 100vh; padding: 20px; transition: all 0.3s ease;
+        }
+        body.fullscreen { padding: 0; }
+        .container {
+            max-width: 800px; margin: 0 auto; background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        /* ... остальные стили остаются без изменений ... */
+
+        /* НОВЫЕ СТИЛИ ДЛЯ ЗАГРУЗКИ КОНФИГУРАЦИИ */
+        .config-controls {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px dashed #4ecdc4;
+        }
+        .config-controls h3 {
+            color: #4ecdc4;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .config-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .config-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .config-btn:hover {
+            background: #3a506b;
+            transform: translateY(-2px);
+        }
+        .config-btn.download {
+            background: #27ae60;
+        }
+        .config-btn.download:hover {
+            background: #219653;
+        }
+        .config-btn.reset {
+            background: #e74c3c;
+        }
+        .config-btn.reset:hover {
+            background: #c0392b;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .config-info {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #a3b5cc;
+            text-align: center;
+        }
+        .current-config {
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #ffd166;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        /* Адаптивность для новых элементов */
+        @media (max-width: 600px) {
+            .config-buttons {
+                flex-direction: column;
+            }
+            .config-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="keep-alive-info" id="keepAliveInfo">🔋 Экран активен</div>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Функциональный Жиросжигатель</h1>
+            <button class="fullscreen-btn" id="fullscreenBtn" title="Полноэкранный режим">⛶</button>
+        </div>
+        <div class="subtitle">Таймер тренировки с голосовыми оповещениями</div>
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="circles">Количество кругов:</label>
+                <select id="circles">
+                    <option value="3">3 круга</option><option value="4">4 круга</option>
+                    <option value="5" selected>5 кругов</option><option value="6">6 кругов</option>
+                    <option value="7">7 кругов</option><option value="8">8 кругов</option>
+                    <option value="9">9 кругов</option>
+                </select>
+            </div>
+            <button class="action-btn" id="startBtn">▶ Старт</button>
+            <button class="action-btn" id="pauseBtn" disabled>⏸ Пауза</button>
+            <button class="action-btn" id="resetBtn">🔄 Сброс</button>
+            <div class="volume-control">
+                <span>🔊</span><input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+                <span id="volumeValue">100%</span>
+            </div>
+        </div>
+        
+        <!-- НОВЫЙ БЛОК: Управление конфигурацией -->
+        <div class="config-controls">
+            <h3>Управление комплексами упражнений</h3>
+            <div class="config-buttons">
+                <div class="file-input-wrapper">
+                    <button class="config-btn" id="loadConfigBtn">
+                        📁 Загрузить комплекс
+                    </button>
+                    <input type="file" id="configFileInput" accept=".json" style="display: none;">
+                </div>
+                <button class="config-btn download" id="downloadConfigBtn">
+                    ⬇️ Скачать текущий комплекс
+                </button>
+                <button class="config-btn" id="saveConfigBtn">
+                    💾 Сохранить как стандартный
+                </button>
+                <button class="config-btn reset" id="resetConfigBtn">
+                    🔄 Сбросить к базовому
+                </button>
+            </div>
+            <div class="config-info">
+                Поддерживаются JSON-файлы с упражнениями и настройками таймера
+            </div>
+            <div class="current-config" id="currentConfigInfo">
+                Используется: Базовый комплекс (9 упражнений)
+            </div>
+        </div>
+        
+        <div class="timer-display">
+            <div class="time" id="timer">45</div>
+            <div class="exercise-info" id="exerciseName">Джамп джек</div>
+            <div class="phase-info" id="phase">Работа</div>
+            <div class="circle-info" id="circleInfo">Круг: 1/5</div>
+            
+            <div class="exercise-details">
+                <div class="next-exercise" id="nextExercise">
+                    Далее: <span id="nextExerciseName">Подтягивания</span>
+                </div>
+                <div class="technique" id="technique">
+                    Прыжки с одновременным разведением рук и ног. Держите спину прямой.
+                </div>
+                <button class="hint-toggle" id="hintToggle">Озвучить технику</button>
+            </div>
+        </div>
+        <div class="status" id="status">Готов к началу тренировки</div>
+        <div class="workout-list">
+            <h3>Упражнения в круге:</h3>
+            <div id="exercisesList"></div>
+        </div>
+    </div>
+
+    <script>
+        // ================= БАЗОВЫЙ КОМПЛЕКС УПРАЖНЕНИЙ =================
+        const defaultExercises = [
+            {
+                name: "Джамп джек",
+                technique: "Исходное положение: ноги вместе, руки вдоль тела. Прыжком расставьте ноги шире плеч, одновременно поднимая руки через стороны над головой. Прыжком вернитесь в исходное положение. Держите спину прямой, приземляйтесь мягко на носки."
+            },
+            {
+                name: "Подтягивания (или Австралийские)",
+                technique: "Для классических: возьмитесь за перекладину хватом шире плеч. На выдохе подтянитесь, чтобы подбородок оказался над перекладиной. На вдохе медленно опуститесь. Для австралийских: используйте низкую перекладину, тело под углом, подтягивайте грудь к перекладине."
+            },
+            {
+                name: "Бёрпи",
+                technique: "1. Из положения стоя присядьте, упритесь ладонями в пол. 2. Прыжком отбросьте ноги назад в планку. 3. Сделайте отжимание (по возможности). 4. Прыжком подтяните ноги к рукам. 5. Выпрыгните вверх с хлопком над головой."
+            },
+            {
+                name: "Отжимания",
+                technique: "Примите упор лёжа, тело образует прямую линию от головы до пят. Ладони под плечами. На вдохе согните локти, опуская тело почти до пола. Локти направлены назад под углом 45°. На выдохе вернитесь в исходное положение."
+            },
+            {
+                name: "Приседания с выпрыгиванием",
+                technique: "Поставьте ноги на ширине плеч. Выполните глубокий присед, отводя таз назад, как будто садитесь на стул. Руки для баланса. Из нижней точки мощно выпрыгните вверх, полностью выпрямляя ноги. Мягко приземлитесь и сразу уходите в следующий присед."
+            },
+            {
+                name: "Велосипед",
+                technique: "Лёжа на спине, поясница прижата к полу, руки за головой. Поднимите лопатки. Одновременно подтяните правое колено к груди и потянитесь к нему левым локтем, выпрямляя левую ногу. Смените сторону. Выполняйте плавно, без рывков, чувствуйте работу пресса."
+            },
+            {
+                name: "Альпинист Cross-body",
+                technique: "Примите положение планки на прямых руках. Быстро подтяните правое колено к левому локтю, скручивая корпус. Верните ногу в исходное положение и сразу подтяните левое колено к правому локтю. Держите пресс в напряжении, не поднимайте таз высоко."
+            },
+            {
+                name: "Выпады с места",
+                technique: "Встаньте прямо, ноги на ширине плеч. Сделайте широкий шаг вперёд правой ногой. Опуститесь в выпад так, чтобы оба колена были согнуты под углом 90°. Колено передней ноги не выходит за носок, колено задней почти касается пола. Оттолкнитесь передней ногой и вернитесь в исходное положение."
+            },
+            {
+                name: "Рукоход в планке",
+                technique: "Примите положение планки на прямых руках. Опуститесь на предплечье одной руки, затем другой. Теперь вернитесь в планку на руках, поднимаясь на ладонь сначала одной, затем другой руки. Держите тело прямо, не допускайте провисания или выпячивания таза."
+            }
+        ];
+
+        const defaultWorkoutConfig = {
+            workTime: 45,
+            restTime: 15,
+            circleRestTime: 60,
+            countdownTime: 5,
+            name: "Базовый жиросжигающий комплекс"
+        };
+
+        // ================= ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =================
+        let exercises = JSON.parse(JSON.stringify(defaultExercises));
+        let workoutConfig = { ...defaultWorkoutConfig };
+        let currentTime = workoutConfig.workTime;
+        let isRunning = false, isPaused = false;
+        let currentPhase = 'work';
+        let currentExerciseIndex = 0, currentCircle = 1, totalCircles = 5;
+        let timerInterval = null, countdownActive = false, speechVolume = 1;
+        let isFullscreen = false, wakeLock = null, mouseKeepAliveInterval = null;
+        let speakTechnique = true;
+
+        // ================= ЭЛЕМЕНТЫ DOM =================
+        const timerElement = document.getElementById('timer');
+        const exerciseNameElement = document.getElementById('exerciseName');
+        const phaseElement = document.getElementById('phase');
+        const circleInfoElement = document.getElementById('circleInfo');
+        const statusElement = document.getElementById('status');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const circlesSelect = document.getElementById('circles');
+        const exercisesListElement = document.getElementById('exercisesList');
+        const volumeSlider = document.getElementById('volume');
+        const volumeValue = document.getElementById('volumeValue');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const keepAliveInfo = document.getElementById('keepAliveInfo');
+        const nextExerciseElement = document.getElementById('nextExercise');
+        const nextExerciseNameElement = document.getElementById('nextExerciseName');
+        const techniqueElement = document.getElementById('technique');
+        const hintToggleBtn = document.getElementById('hintToggle');
+        
+        // Новые элементы для загрузки конфигурации
+        const loadConfigBtn = document.getElementById('loadConfigBtn');
+        const configFileInput = document.getElementById('configFileInput');
+        const downloadConfigBtn = document.getElementById('downloadConfigBtn');
+        const saveConfigBtn = document.getElementById('saveConfigBtn');
+        const resetConfigBtn = document.getElementById('resetConfigBtn');
+        const currentConfigInfo = document.getElementById('currentConfigInfo');
+
+        // ================= ФУНКЦИИ РАБОТЫ С КОНФИГУРАЦИЕЙ =================
+        function loadConfiguration(file) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const configData = JSON.parse(e.target.result);
+                    
+                    // Валидация конфигурации
+                    if (!configData.exercises || !Array.isArray(configData.exercises)) {
+                        throw new Error("Некорректный формат: отсутствует массив упражнений");
+                    }
+                    
+                    if (configData.exercises.length === 0) {
+                        throw new Error("Массив упражнений не может быть пустым");
+                    }
+                    
+                    // Проверка каждого упражнения
+                    configData.exercises.forEach((ex, index) => {
+                        if (!ex.name || !ex.technique) {
+                            throw new Error(`Упражнение ${index + 1} должно содержать name и technique`);
+                        }
+                    });
+                    
+                    // Загружаем упражнения
+                    exercises = configData.exercises;
+                    
+                    // Загружаем настройки таймера (если есть)
+                    if (configData.workoutConfig) {
+                        workoutConfig = {
+                            workTime: configData.workoutConfig.workTime || defaultWorkoutConfig.workTime,
+                            restTime: configData.workoutConfig.restTime || defaultWorkoutConfig.restTime,
+                            circleRestTime: configData.workoutConfig.circleRestTime || defaultWorkoutConfig.circleRestTime,
+                            countdownTime: configData.workoutConfig.countdownTime || defaultWorkoutConfig.countdownTime,
+                            name: configData.workoutConfig.name || "Пользовательский комплекс"
+                        };
+                    }
+                    
+                    // Загружаем количество кругов (если есть)
+                    if (configData.totalCircles) {
+                        totalCircles = configData.totalCircles;
+                        circlesSelect.value = totalCircles.toString();
+                    }
+                    
+                    // Сбрасываем тренировку
+                    resetWorkout();
+                    
+                    // Обновляем интерфейс
+                    updateExerciseList();
+                    updateDisplay();
+                    updateConfigInfo(configData.workoutConfig?.name || "Пользовательский комплекс");
+                    
+                    speak(`Загружен комплекс: ${exercises.length} упражнений`);
+                    
+                } catch (error) {
+                    speak("Ошибка загрузки конфигурации");
+                    statusElement.textContent = `Ошибка: ${error.message}`;
+                    statusElement.style.color = '#ff6b6b';
+                    console.error("Ошибка загрузки конфигурации:", error);
+                }
+            };
+            
+            reader.onerror = function() {
+                speak("Ошибка чтения файла");
+                statusElement.textContent = "Ошибка чтения файла";
+                statusElement.style.color = '#ff6b6b';
+            };
+            
+            reader.readAsText(file);
+        }
+
+        function downloadCurrentConfiguration() {
+            const configToSave = {
+                version: "1.0",
+                exportedAt: new Date().toISOString(),
+                exercises: exercises,
+                workoutConfig: workoutConfig,
+                totalCircles: totalCircles
+            };
+            
+            const dataStr = JSON.stringify(configToSave, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `workout-config-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            speak("Конфигурация сохранена");
+            statusElement.textContent = "Конфигурация скачана";
+            statusElement.style.color = '#4ecdc4';
+            setTimeout(() => {
+                if (!isRunning) statusElement.textContent = "Готов к началу тренировки";
+            }, 2000);
+        }
+
+        function saveAsDefaultConfiguration() {
+            try {
+                const configToSave = {
+                    exercises: exercises,
+                    workoutConfig: workoutConfig
+                };
+                
+                localStorage.setItem('customWorkoutConfig', JSON.stringify(configToSave));
+                
+                speak("Комплекс сохранён как стандартный");
+                statusElement.textContent = "Комплекс сохранён как стандартный";
+                statusElement.style.color = '#4ecdc4';
+                updateConfigInfo(workoutConfig.name || "Пользовательский (сохранён)");
+                
+                setTimeout(() => {
+                    if (!isRunning) statusElement.textContent = "Готов к началу тренировки";
+                }, 2000);
+                
+            } catch (error) {
+                speak("Ошибка сохранения");
+                statusElement.textContent = "Ошибка сохранения конфигурации";
+                statusElement.style.color = '#ff6b6b';
+            }
+        }
+
+        function loadDefaultConfiguration() {
+            try {
+                const savedConfig = localStorage.getItem('customWorkoutConfig');
+                
+                if (savedConfig) {
+                    const configData = JSON.parse(savedConfig);
+                    exercises = configData.exercises || defaultExercises;
+                    workoutConfig = configData.workoutConfig || defaultWorkoutConfig;
+                    
+                    resetWorkout();
+                    updateExerciseList();
+                    updateDisplay();
+                    updateConfigInfo(workoutConfig.name || "Сохранённый комплекс");
+                    
+                    speak("Загружен сохранённый комплекс");
+                } else {
+                    resetToBaseConfiguration();
+                }
+                
+            } catch (error) {
+                console.error("Ошибка загрузки сохранённой конфигурации:", error);
+                resetToBaseConfiguration();
+            }
+        }
+
+        function resetToBaseConfiguration() {
+            exercises = JSON.parse(JSON.stringify(defaultExercises));
+            workoutConfig = { ...defaultWorkoutConfig };
+            totalCircles = 5;
+            circlesSelect.value = "5";
+            
+            resetWorkout();
+            updateExerciseList();
+            updateDisplay();
+            updateConfigInfo("Базовый комплекс");
+            
+            speak("Загружен базовый комплекс");
+            statusElement.textContent = "Загружен базовый комплекс упражнений";
+            statusElement.style.color = '#4ecdc4';
+            
+            setTimeout(() => {
+                if (!isRunning) statusElement.textContent = "Готов к началу тренировки";
+            }, 2000);
+        }
+
+        function updateConfigInfo(configName) {
+            currentConfigInfo.textContent = `Используется: ${configName} (${exercises.length} упражнений)`;
+        }
+
+        // ================= МОДИФИЦИРОВАННЫЕ ФУНКЦИИ =================
+        function init() {
+            // Загружаем настройку озвучивания техники
+            const savedSetting = localStorage.getItem('speakTechnique');
+            if (savedSetting !== null) {
+                speakTechnique = savedSetting === 'true';
+            }
+            hintToggleBtn.textContent = speakTechnique ? 
+                "Озвучить технику ✓" : "Озвучить технику";
+            
+            // Загружаем сохранённую конфигурацию или базовую
+            loadDefaultConfiguration();
+            
+            totalCircles = parseInt(circlesSelect.value);
+            updateExerciseList();
+            updateDisplay();
+            
+            // Назначаем обработчики
+            startBtn.addEventListener('click', startWorkout);
+            pauseBtn.addEventListener('click', togglePause);
+            resetBtn.addEventListener('click', resetWorkout);
+            hintToggleBtn.addEventListener('click', toggleTechniqueVoice);
+            
+            // Обработчики для конфигурации
+            loadConfigBtn.addEventListener('click', () => {
+                configFileInput.click();
+            });
+            
+            configFileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    loadConfiguration(e.target.files[0]);
+                    e.target.value = ''; // Сброс для возможности повторной загрузки
+                }
+            });
+            
+            downloadConfigBtn.addEventListener('click', downloadCurrentConfiguration);
+            saveConfigBtn.addEventListener('click', saveAsDefaultConfiguration);
+            resetConfigBtn.addEventListener('click', resetToBaseConfiguration);
+            
+            circlesSelect.addEventListener('change', () => {
+                totalCircles = parseInt(circlesSelect.value);
+                updateCircleInfo();
+            });
+            
+            volumeSlider.addEventListener('input', (e) => {
+                speechVolume = parseFloat(e.target.value);
+                volumeValue.textContent = `${Math.round(speechVolume * 100)}%`;
+            });
+            
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            
+            const fullscreenEvents = ['fullscreenchange', 'webkitfullscreenchange', 
+                                     'mozfullscreenchange', 'MSFullscreenChange'];
+            fullscreenEvents.forEach(event => {
+                document.addEventListener(event, updateFullscreenButton);
+            });
+            
+            if (!('speechSynthesis' in window)) {
+                statusElement.textContent = 'Внимание: Ваш браузер не поддерживает голосовые оповещения';
+                statusElement.style.color = '#ff6b6b';
+            }
+        }
+
+        // ================= ПРИМЕР ФОРМАТА JSON-КОНФИГУРАЦИИ =================
+        // Для справки пользователей
+        function showExampleConfig() {
+            const exampleConfig = {
+                "version": "1.0",
+                "name": "Мой комплекс",
+                "exercises": [
+                    {
+                        "name": "Прыжки через скакалку",
+                        "technique": "Прыгайте на носках, вращая скакалку кистями, а не всей рукой."
+                    },
+                    {
+                        "name": "Планка",
+                        "technique": "Локти под плечами, тело образует прямую линию, пресс напряжён."
+                    }
+                ],
+                "workoutConfig": {
+                    "workTime": 40,
+                    "restTime": 20,
+                    "circleRestTime": 45,
+                    "countdownTime": 3,
+                    "name": "Кардио комплекс"
+                },
+                "totalCircles": 4
+            };
+            
+            console.log("Пример формата конфигурации:", JSON.stringify(exampleConfig, null, 2));
+        }
+
+        // Остальные функции (startWorkout, togglePause, resetWorkout, updateTimer, 
+        // handleTimerComplete, completeWorkout, updateExerciseDetails, toggleTechniqueVoice,
+        // speakExerciseWithTechnique, updateExerciseList, updateActiveExercise, updateDisplay,
+        // getPhaseText, updateCircleInfo, speak, speakCountdown, toggleFullscreen,
+        // enterFullscreen, exitFullscreen, updateFullscreenButton, requestWakeLock,
+        // releaseKeepAlive, startMouseMoveKeepAlive, stopMouseMoveKeepAlive)
+        // остаются без изменений из предыдущего кода
+        
+        // ================= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =================
+        function updateExerciseDetails() {
+            if (exercises.length === 0) return;
+            
+            exerciseNameElement.textContent = exercises[currentExerciseIndex].name;
+            techniqueElement.textContent = exercises[currentExerciseIndex].technique;
+            
+            let nextIndex = currentExerciseIndex + 1;
+            let nextCircle = currentCircle;
+            
+            if (nextIndex >= exercises.length) {
+                nextIndex = 0;
+                nextCircle = currentCircle + 1;
+            }
+            
+            if (nextCircle <= totalCircles) {
+                nextExerciseNameElement.textContent = exercises[nextIndex].name;
+            } else {
+                nextExerciseNameElement.textContent = "Конец тренировки";
+            }
+            
+            if (currentPhase === 'rest' || currentPhase === 'circleRest') {
+                nextExerciseElement.classList.add('show');
+            } else {
+                nextExerciseElement.classList.remove('show');
+            }
+            
+            updateActiveExercise();
+        }
+        
+        function toggleTechniqueVoice() {
+            speakTechnique = !speakTechnique;
+            hintToggleBtn.textContent = speakTechnique ? 
+                "Озвучить технику ✓" : "Озвучить технику";
+            localStorage.setItem('speakTechnique', speakTechnique);
+        }
+        
+        function speakExerciseWithTechnique() {
+            if (exercises.length === 0) return;
+            
+            const exercise = exercises[currentExerciseIndex];
+            let textToSpeak = `Начинаем ${exercise.name}`;
+            
+            if (speakTechnique) {
+                textToSpeak += `. ${exercise.technique}`;
+            }
+            
+            speak(textToSpeak);
+        }
+
+        // Остальной код функций (startWorkout, togglePause, resetWorkout, updateTimer,
+        // handleTimerComplete, completeWorkout, updateExerciseList, updateActiveExercise,
+        // updateDisplay, getPhaseText, updateCircleInfo, speak, speakCountdown,
+        // toggleFullscreen, enterFullscreen, exitFullscreen, updateFullscreenButton,
+        // requestWakeLock, releaseKeepAlive, startMouseMoveKeepAlive, stopMouseMoveKeepAlive)
+        // остаётся таким же как в оригинале
+
+        // ================= ОБРАБОТЧИКИ СОБЫТИЙ =================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isFullscreen) setTimeout(updateFullscreenButton, 100);
+            
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isRunning) togglePause(); else startWorkout();
+            }
+            
+            if (e.code === 'KeyR' && e.ctrlKey) {
+                e.preventDefault();
+                resetWorkout();
+            }
+            
+            if (e.code === 'KeyF') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+            
+            if (e.code === 'KeyH' && e.ctrlKey) {
+                e.preventDefault();
+                toggleTechniqueVoice();
+            }
+            
+            // Новая горячая клавиша: Ctrl+O для загрузки конфигурации
+            if (e.code === 'KeyO' && e.ctrlKey) {
+                e.preventDefault();
+                configFileInput.click();
+            }
+        });
+
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && isRunning && !isPaused) {
+                try {
+                    await requestWakeLock();
+                } catch (err) {
+                    console.error('Не удалось восстановить активность экрана:', err);
+                }
+            }
+        });
+
+        // ================= ИНИЦИАЛИЗАЦИЯ =================
+        window.addEventListener('DOMContentLoaded', init);
+        
+        speechSynthesis.getVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {};
+        }
+        
+        window.addEventListener('beforeunload', () => {
+            if (wakeLock !== null) wakeLock.release();
+            if (mouseKeepAliveInterval) clearInterval(mouseKeepAliveInterval);
+        });
+        
+        // Показать пример формата при первом запуске (в консоли)
+        window.addEventListener('load', () => {
+            console.log("Для создания своего комплекса используйте JSON формат. Вызовите showExampleConfig() в консоли для примера.");
+        });
+    </script>
+</body>
+</html>

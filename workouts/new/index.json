@@ -1,783 +1,585 @@
-	
-version	"3.0"
-metadata	
-name	"Каталог тренировок по уровням"
-description	"30 тренировок, сгенерированных на основе упражнений Пола Уайда, Cosmos и других систем"
-created	"2025-01-25"
-updated	"2025-01-25"
-author	"SportTrainDeepTabata"
-totalPrograms	30
-totalFolders	3
-maxDepth	2
-folders	
-0	
-id	"beginner"
-name	"Тренировки начального уровня"
-icon	"fa-user"
-description	"Тренировки для начального уровня подготовки"
-color	"#4cc9f0"
-programs	
-0	
-id	"workout_001"
-name	"Базовая тренировка для начинающих (Уровень: начальный)"
-description	"Идеальная программа для тех, кто только начинает свой путь в фитнесе"
-url	"workouts/workout_001_bazovaya_trenirovka_dlya_nachinayuschih.json"
-difficulty	"beginner"
-level	"beginner"
-duration	29
-durationDisplay	"29 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	232
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"beginner"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-1	
-id	"workout_002"
-name	"Фундамент: стартовая программа (Уровень: начальный)"
-description	"Идеальная программа для тех, кто только начинает свой путь в фитнесе"
-url	"workouts/workout_002_fundament_startovaya_programma.json"
-difficulty	"beginner"
-level	"beginner"
-duration	29
-durationDisplay	"29 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	232
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"beginner"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-2	
-id	"workout_003"
-name	"Лёгкий комплекс на все тело (Уровень: начальный)"
-description	"Идеальная программа для тех, кто только начинает свой путь в фитнесе"
-url	"workouts/workout_003_lyogkiy_kompleks_na_vse_telo.json"
-difficulty	"beginner"
-level	"beginner"
-duration	29
-durationDisplay	"29 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	232
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"beginner"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-3	
-id	"workout_004"
-name	"Введение в функциональный тренинг (Уровень: начальный)"
-description	"Идеальная программа для тех, кто только начинает свой путь в фитнесе"
-url	"workouts/workout_004_vvedenie_v_funktsionalnyy_trening.json"
-difficulty	"beginner"
-level	"beginner"
-duration	29
-durationDisplay	"29 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	232
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"beginner"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-4	
-id	"workout_005"
-name	"Начальный уровень: основа основ (Уровень: начальный)"
-description	"Идеальная программа для тех, кто только начинает свой путь в фитнесе"
-url	"workouts/workout_005_nachalnyy_uroven_osnova_osnov.json"
-difficulty	"beginner"
-level	"beginner"
-duration	29
-durationDisplay	"29 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	232
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"beginner"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-1	
-id	"intermediate"
-name	"Тренировки среднего уровня"
-icon	"fa-user-graduate"
-description	"Тренировки для среднего уровня подготовки"
-color	"#ff9e6d"
-programs	
-0	
-id	"workout_001"
-name	"Интенсивная круговая тренировка (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_001_intensivnaya_krugovaya_trenirovka.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-1	
-id	"workout_002"
-name	"Силовой вызов (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_002_silovoy_vyzov.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-2	
-id	"workout_003"
-name	"Кардио-силовая программа (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_003_kardio_silovaya_programma.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-3	
-id	"workout_004"
-name	"Функциональный комплекс (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_004_funktsionalnyy_kompleks.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-4	
-id	"workout_005"
-name	"Выносливость и сила (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_005_vynoslivost_i_sila.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-5	
-id	"workout_006"
-name	"Полная проработка тела (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_006_polnaya_prorabotka_tela.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-6	
-id	"workout_007"
-name	"Интервальный тренинг (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_007_intervalnyy_trening.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-7	
-id	"workout_008"
-name	"Метаболический ускоритель (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_008_metabolicheskiy_uskoritel.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-8	
-id	"workout_009"
-name	"Баланс и координация (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_009_balans_i_koordinatsiya.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-9	
-id	"workout_010"
-name	"Энергия и тонус (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_010_energiya_i_tonus.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-10	
-id	"workout_011"
-name	"Прогрессивная нагрузка (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_011_progressivnaya_nagruzka.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-11	
-id	"workout_012"
-name	"Сбалансированный комплекс (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_012_sbalansirovannyy_kompleks.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-12	
-id	"workout_013"
-name	"Динамическая тренировка (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_013_dinamicheskaya_trenirovka.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-13	
-id	"workout_014"
-name	"Мощность и стабильность (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_014_moschnost_i_stabilnost.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-14	
-id	"workout_015"
-name	"Гармоничное развитие (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_015_garmonichnoe_razvitie.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-15	
-id	"workout_016"
-name	"Активная работа (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_016_aktivnaya_rabota.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-16	
-id	"workout_017"
-name	"Трансформация тела (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_017_transformatsiya_tela.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-17	
-id	"workout_018"
-name	"Сила воли (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_018_sila_voli.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-18	
-id	"workout_019"
-name	"Вызов себе (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_019_vyzov_sebe.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-19	
-id	"workout_020"
-name	"Путь к прогрессу (Уровень: средний)"
-description	"Сбалансированная программа для тех, кто уже имеет базовую подготовку"
-url	"workouts/workout_020_put_k_progressu.json"
-difficulty	"intermediate"
-level	"intermediate"
-duration	49
-durationDisplay	"49 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	392
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"intermediate"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-2	
-id	"advanced"
-name	"Тренировки продвинутого уровня"
-icon	"fa-user-ninja"
-description	"Тренировки для продвинутого уровня подготовки"
-color	"#ff6b6b"
-programs	
-0	
-id	"workout_001"
-name	"Продвинутый экстрим (Уровень: продвинутый)"
-description	"Экстремальная программа для опытных атлетов"
-url	"workouts/workout_001_prodvinutyy_ekstrim.json"
-difficulty	"advanced"
-level	"advanced"
-duration	59
-durationDisplay	"59 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	472
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"advanced"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-1	
-id	"workout_002"
-name	"Максимальная интенсивность (Уровень: продвинутый)"
-description	"Экстремальная программа для опытных атлетов"
-url	"workouts/workout_002_maksimalnaya_intensivnost.json"
-difficulty	"advanced"
-level	"advanced"
-duration	59
-durationDisplay	"59 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	472
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"advanced"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-2	
-id	"workout_003"
-name	"Элитная программа (Уровень: продвинутый)"
-description	"Экстремальная программа для опытных атлетов"
-url	"workouts/workout_003_elitnaya_programma.json"
-difficulty	"advanced"
-level	"advanced"
-duration	59
-durationDisplay	"59 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	472
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"advanced"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-3	
-id	"workout_004"
-name	"Предел возможностей (Уровень: продвинутый)"
-description	"Экстремальная программа для опытных атлетов"
-url	"workouts/workout_004_predel_vozmozhnostey.json"
-difficulty	"advanced"
-level	"advanced"
-duration	59
-durationDisplay	"59 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	472
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"advanced"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
-4	
-id	"workout_005"
-name	"Профессиональный уровень (Уровень: продвинутый)"
-description	"Экстремальная программа для опытных атлетов"
-url	"workouts/workout_005_professionalnyy_uroven.json"
-difficulty	"advanced"
-level	"advanced"
-duration	59
-durationDisplay	"59 минут"
-exercisesCount	9
-equipment	"коврик, таймер, вода"
-calories	472
-focusAreas	
-0	"ноги"
-1	"тянущие"
-2	"толкающие"
-3	"кардио"
-4	"кор"
-5	"все тело"
-tags	
-0	"advanced"
-1	"круговая"
-2	"функциональная"
-created	"2025-01-25"
-rating	4.5
+{
+  "version": "2.0",
+  "metadata": {
+    "name": "Каталог тренировок по уровням (формат v2)",
+    "description": "30 тренировок, сгенерированных на основе упражнений Пола Уайда, Cosmos и других систем",
+    "created": "2025-01-25",
+    "updated": "2025-01-25",
+    "author": "SportTrainDeepTabata",
+    "totalPrograms": 30,
+    "totalFolders": 4,
+    "maxDepth": 2
+  },
+  "folders": [
+    {
+      "id": "beginner-programs",
+      "name": "Программы начального уровня",
+      "icon": "fa-user",
+      "description": "Тренировки для начального уровня подготовки",
+      "color": "#4cc9f0",
+      "programs": [
+        {
+          "id": "workout_001",
+          "name": "Базовая тренировка для начинающих",
+          "description": "Идеальная программа для тех, кто только начинает свой путь в фитнесе",
+          "url": "workouts/workout_001_bazovaya_trenirovka_dlya_nachinayuschih.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 29,
+          "durationDisplay": "29 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 232,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["beginner", "круговая", "функциональная", "начальный"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_002",
+          "name": "Фундамент: стартовая программа",
+          "description": "Идеальная программа для тех, кто только начинает свой путь в фитнесе",
+          "url": "workouts/workout_002_fundament_startovaya_programma.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 29,
+          "durationDisplay": "29 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 232,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["beginner", "круговая", "функциональная", "начальный"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_003",
+          "name": "Лёгкий комплекс на все тело",
+          "description": "Идеальная программа для тех, кто только начинает свой путь в фитнесе",
+          "url": "workouts/workout_003_lyogkiy_kompleks_na_vse_telo.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 29,
+          "durationDisplay": "29 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 232,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["beginner", "круговая", "функциональная", "начальный"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_004",
+          "name": "Введение в функциональный тренинг",
+          "description": "Идеальная программа для тех, кто только начинает свой путь в фитнесе",
+          "url": "workouts/workout_004_vvedenie_v_funktsionalnyy_trening.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 29,
+          "durationDisplay": "29 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 232,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["beginner", "круговая", "функциональная", "начальный"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_005",
+          "name": "Начальный уровень: основа основ",
+          "description": "Идеальная программа для тех, кто только начинает свой путь в фитнесе",
+          "url": "workouts/workout_005_nachalnyy_uroven_osnova_osnov.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 29,
+          "durationDisplay": "29 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 232,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["beginner", "круговая", "функциональная", "начальный"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        }
+      ]
+    },
+    {
+      "id": "intermediate-programs",
+      "name": "Программы среднего уровня",
+      "icon": "fa-user-graduate",
+      "description": "Тренировки для среднего уровня подготовки",
+      "color": "#ff9e6d",
+      "folders": [
+        {
+          "id": "circuit-training",
+          "name": "Круговые тренировки",
+          "icon": "fa-sync",
+          "description": "Круговые тренировки среднего уровня",
+          "programs": [
+            {
+              "id": "workout_001_int",
+              "name": "Интенсивная круговая тренировка",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_001_intensivnaya_krugovaya_trenirovka.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "круговая", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_004_int",
+              "name": "Функциональный комплекс",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_004_funktsionalnyy_kompleks.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "круговая", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_006_int",
+              "name": "Полная проработка тела",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_006_polnaya_prorabotka_tela.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "круговая", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_012_int",
+              "name": "Сбалансированный комплекс",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_012_sbalansirovannyy_kompleks.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "круговая", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_015_int",
+              "name": "Гармоничное развитие",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_015_garmonichnoe_razvitie.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "круговая", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "id": "strength-training",
+          "name": "Силовые тренировки",
+          "icon": "fa-dumbbell",
+          "description": "Силовые тренировки среднего уровня",
+          "programs": [
+            {
+              "id": "workout_002_int",
+              "name": "Силовой вызов",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_002_silovoy_vyzov.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "сила", "функциональная", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_005_int",
+              "name": "Выносливость и сила",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_005_vynoslivost_i_sila.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "сила", "выносливость", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_014_int",
+              "name": "Мощность и стабильность",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_014_moschnost_i_stabilnost.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "сила", "стабильность", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "id": "cardio-strength",
+          "name": "Кардио-силовые",
+          "icon": "fa-heartbeat",
+          "description": "Комбинированные кардио-силовые тренировки",
+          "programs": [
+            {
+              "id": "workout_003_int",
+              "name": "Кардио-силовая программа",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_003_kardio_silovaya_programma.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "кардио", "сила", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_007_int",
+              "name": "Интервальный тренинг",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_007_intervalnyy_trening.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "интервалы", "кардио", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_008_int",
+              "name": "Метаболический ускоритель",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_008_metabolicheskiy_uskoritel.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "метаболизм", "кардио", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_010_int",
+              "name": "Энергия и тонус",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_010_energiya_i_tonus.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "энергия", "тонус", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_013_int",
+              "name": "Динамическая тренировка",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_013_dinamicheskaya_trenirovka.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "динамика", "кардио", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            }
+          ]
+        },
+        {
+          "id": "special-programs",
+          "name": "Специальные программы",
+          "icon": "fa-star",
+          "description": "Специализированные программы среднего уровня",
+          "programs": [
+            {
+              "id": "workout_009_int",
+              "name": "Баланс и координация",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_009_balans_i_koordinatsiya.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "баланс", "координация", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_011_int",
+              "name": "Прогрессивная нагрузка",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_011_progressivnaya_nagruzka.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "прогрессия", "развитие", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_016_int",
+              "name": "Активная работа",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_016_aktivnaya_rabota.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "активность", "работа", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_017_int",
+              "name": "Трансформация тела",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_017_transformatsiya_tela.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "трансформация", "тело", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_018_int",
+              "name": "Сила воли",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_018_sila_voli.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "мотивация", "воля", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_019_int",
+              "name": "Вызов себе",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_019_vyzov_sebe.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "вызов", "мотивация", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            },
+            {
+              "id": "workout_020_int",
+              "name": "Путь к прогрессу",
+              "description": "Сбалансированная программа для тех, кто уже имеет базовую подготовку",
+              "url": "workouts/workout_020_put_k_progressu.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 49,
+              "durationDisplay": "49 минут",
+              "exercisesCount": 9,
+              "equipment": "коврик, таймер, вода",
+              "calories": 392,
+              "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+              "tags": ["intermediate", "прогресс", "развитие", "средний"],
+              "created": "2025-01-25",
+              "rating": 4.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "advanced-programs",
+      "name": "Программы продвинутого уровня",
+      "icon": "fa-user-ninja",
+      "description": "Тренировки для продвинутого уровня подготовки",
+      "color": "#ff6b6b",
+      "programs": [
+        {
+          "id": "workout_001_adv",
+          "name": "Продвинутый экстрим",
+          "description": "Экстремальная программа для опытных атлетов",
+          "url": "workouts/workout_001_prodvinutyy_ekstrim.json",
+          "difficulty": "hard",
+          "level": "advanced",
+          "duration": 59,
+          "durationDisplay": "59 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 472,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["advanced", "экстрим", "продвинутый"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_002_adv",
+          "name": "Максимальная интенсивность",
+          "description": "Экстремальная программа для опытных атлетов",
+          "url": "workouts/workout_002_maksimalnaya_intensivnost.json",
+          "difficulty": "hard",
+          "level": "advanced",
+          "duration": 59,
+          "durationDisplay": "59 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 472,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["advanced", "интенсивность", "продвинутый"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_003_adv",
+          "name": "Элитная программа",
+          "description": "Экстремальная программа для опытных атлетов",
+          "url": "workouts/workout_003_elitnaya_programma.json",
+          "difficulty": "hard",
+          "level": "advanced",
+          "duration": 59,
+          "durationDisplay": "59 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 472,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["advanced", "элита", "продвинутый"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_004_adv",
+          "name": "Предел возможностей",
+          "description": "Экстремальная программа для опытных атлетов",
+          "url": "workouts/workout_004_predel_vozmozhnostey.json",
+          "difficulty": "hard",
+          "level": "advanced",
+          "duration": 59,
+          "durationDisplay": "59 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 472,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["advanced", "предел", "продвинутый"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        },
+        {
+          "id": "workout_005_adv",
+          "name": "Профессиональный уровень",
+          "description": "Экстремальная программа для опытных атлетов",
+          "url": "workouts/workout_005_professionalnyy_uroven.json",
+          "difficulty": "hard",
+          "level": "advanced",
+          "duration": 59,
+          "durationDisplay": "59 минут",
+          "exercisesCount": 9,
+          "equipment": "коврик, таймер, вода",
+          "calories": 472,
+          "focusAreas": ["ноги", "тянущие", "толкающие", "кардио", "кор", "все тело"],
+          "tags": ["advanced", "профессиональный", "продвинутый"],
+          "created": "2025-01-25",
+          "rating": 4.5
+        }
+      ]
+    }
+  ],
+  "programs": []
+}

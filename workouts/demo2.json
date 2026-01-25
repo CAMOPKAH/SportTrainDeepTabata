@@ -1,0 +1,402 @@
+{
+  "version": "2.0",
+  "metadata": {
+    "name": "Полный каталог тренировок",
+    "description": "Демонстрация всех возможностей древовидной структуры версии 2.0",
+    "created": "2025-01-25",
+    "updated": "2025-01-25",
+    "author": "SportTrainDeepTabata",
+    "totalPrograms": 15,
+    "totalFolders": 8,
+    "maxDepth": 3
+  },
+  "folders": [
+    {
+      "id": "fitness",
+      "name": "Фитнес",
+      "icon": "fa-dumbbell",
+      "description": "Все виды фитнес тренировок",
+      "color": "#ff6b6b",
+      "folders": [
+        {
+          "id": "cardio",
+          "name": "Кардио тренировки",
+          "icon": "fa-heartbeat",
+          "description": "Тренировки для развития сердечно-сосудистой системы",
+          "color": "#ff9e6d",
+          "folders": [
+            {
+              "id": "hiit",
+              "name": "HIIT",
+              "icon": "fa-bolt",
+              "description": "Высокоинтенсивные интервальные тренировки",
+              "programs": [
+                {
+                  "id": "hiit-beginner",
+                  "name": "HIIT для начинающих",
+                  "description": "Введение в высокоинтенсивные интервальные тренировки",
+                  "url": "workouts/fitness/cardio/hiit/beginner.json",
+                  "difficulty": "easy",
+                  "level": "beginner",
+                  "duration": 20,
+                  "durationDisplay": "20 минут",
+                  "exercisesCount": 8,
+                  "equipment": "коврик, таймер, вода",
+                  "calories": 180,
+                  "focusAreas": ["все тело", "выносливость"],
+                  "tags": ["hiit", "начальный", "дома"],
+                  "created": "2024-12-01",
+                  "rating": 4.5,
+                  "css": ["styles/hiit.css"],
+                  "js": ["scripts/progress.js"]
+                },
+                {
+                  "id": "hiit-advanced",
+                  "name": "Продвинутый HIIT",
+                  "description": "Интенсивная интервальная тренировка для опытных",
+                  "url": "workouts/fitness/cardio/hiit/advanced.json",
+                  "difficulty": "expert",
+                  "level": "expert",
+                  "duration": 30,
+                  "durationDisplay": "30 минут",
+                  "exercisesCount": 12,
+                  "equipment": "гантели, скакалка, коврик, таймер",
+                  "calories": 350,
+                  "focusAreas": ["все тело", "сила", "выносливость"],
+                  "tags": ["hiit", "продвинутый", "снаряжение"],
+                  "created": "2024-12-15",
+                  "rating": 4.8
+                }
+              ]
+            },
+            {
+              "id": "liss",
+              "name": "LISS кардио",
+              "icon": "fa-tachometer-alt",
+              "description": "Низкоинтенсивные стабильные кардио тренировки",
+              "programs": [
+                {
+                  "id": "liss-walking",
+                  "name": "Оздоровительная ходьба",
+                  "description": "Низкоинтенсивная ходьба для восстановления и здоровья",
+                  "url": "workouts/fitness/cardio/liss/walking.json",
+                  "difficulty": "easy",
+                  "level": "beginner",
+                  "duration": 45,
+                  "durationDisplay": "45 минут",
+                  "exercisesCount": 1,
+                  "equipment": "удобная обувь, трекер активности",
+                  "calories": 250,
+                  "focusAreas": ["ноги", "сердечно-сосудистая система", "восстановление"],
+                  "tags": ["liss", "ходьба", "оздоровление"],
+                  "created": "2024-11-20"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "strength",
+          "name": "Силовые тренировки",
+          "icon": "fa-weight-hanging",
+          "description": "Тренировки для развития силы и мышечной массы",
+          "color": "#4cc9f0",
+          "folders": [
+            {
+              "id": "upper-body",
+              "name": "Верх тела",
+              "icon": "fa-user",
+              "description": "Тренировки мышц верхней части тела",
+              "programs": [
+                {
+                  "id": "push-day",
+                  "name": "День толкающих мышц",
+                  "description": "Грудь, плечи, трицепсы - полная тренировка",
+                  "url": "workouts/fitness/strength/upper/push.json",
+                  "difficulty": "medium",
+                  "level": "intermediate",
+                  "duration": 60,
+                  "durationDisplay": "1 час",
+                  "exercisesCount": 10,
+                  "equipment": "штанга, гантели, скамья, турник",
+                  "calories": 320,
+                  "focusAreas": ["грудь", "плечи", "трицепсы"],
+                  "tags": ["сила", "верх тела", "тренажерный зал"],
+                  "created": "2024-12-10",
+                  "rating": 4.7
+                },
+                {
+                  "id": "pull-day",
+                  "name": "День тянущих мышц",
+                  "description": "Спина, бицепсы - комплексная тренировка",
+                  "url": "workouts/fitness/strength/upper/pull.json",
+                  "difficulty": "medium",
+                  "level": "intermediate",
+                  "duration": 55,
+                  "durationDisplay": "55 минут",
+                  "exercisesCount": 9,
+                  "equipment": "турник, гантели, тросовый тренажер",
+                  "calories": 300,
+                  "focusAreas": ["спина", "бицепсы", "предплечья"],
+                  "tags": ["сила", "верх тела", "подтягивания"],
+                  "created": "2024-12-12"
+                }
+              ]
+            },
+            {
+              "id": "lower-body",
+              "name": "Низ тела",
+              "icon": "fa-walking",
+              "description": "Тренировки ног и ягодичных мышц",
+              "programs": [
+                {
+                  "id": "leg-day-power",
+                  "name": "Силовой день ног",
+                  "description": "Интенсивная тренировка для развития силы ног",
+                  "url": "workouts/fitness/strength/lower/power.json",
+                  "difficulty": "hard",
+                  "level": "advanced",
+                  "duration": 70,
+                  "durationDisplay": "1 час 10 минут",
+                  "exercisesCount": 8,
+                  "equipment": "штанга, гантели, платформа, пояс",
+                  "calories": 380,
+                  "focusAreas": ["квадрицепсы", "бицепсы бедер", "ягодицы", "икры"],
+                  "tags": ["сила", "ноги", "тяжелая"],
+                  "created": "2024-12-05",
+                  "rating": 4.9
+                }
+              ]
+            },
+            {
+              "id": "full-body-strength",
+              "name": "Полное тело",
+              "icon": "fa-people-arrows",
+              "description": "Комплексные силовые тренировки всего тела",
+              "programs": [
+                {
+                  "id": "full-body-basic",
+                  "name": "Базовая тренировка всего тела",
+                  "description": "Фундаментальные упражнения для всех групп мышц",
+                  "url": "workouts/fitness/strength/full/basic.json",
+                  "difficulty": "medium",
+                  "level": "intermediate",
+                  "duration": 50,
+                  "durationDisplay": "50 минут",
+                  "exercisesCount": 12,
+                  "equipment": "гантели, скамья, коврик",
+                  "calories": 290,
+                  "focusAreas": ["все тело", "баланс", "координация"],
+                  "tags": ["полное тело", "фундамент", "дом/зал"],
+                  "created": "2024-11-25"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yoga",
+      "name": "Йога и растяжка",
+      "icon": "fa-spa",
+      "description": "Практики для гибкости, баланса и релаксации",
+      "color": "#72efdd",
+      "folders": [
+        {
+          "id": "vinyasa",
+          "name": "Виньяса",
+          "icon": "fa-wind",
+          "description": "Динамические потоки йоги",
+          "programs": [
+            {
+              "id": "morning-vinyasa",
+              "name": "Утренняя виньяса",
+              "description": "Энергичный поток для пробуждения и заряда бодрости",
+              "url": "workouts/yoga/vinyasa/morning.json",
+              "difficulty": "medium",
+              "level": "intermediate",
+              "duration": 30,
+              "durationDisplay": "30 минут",
+              "exercisesCount": 15,
+              "equipment": "коврик для йоги, блок, ремень",
+              "calories": 150,
+              "focusAreas": ["гибкость", "баланс", "энергия"],
+              "tags": ["йога", "утро", "динамика"],
+              "created": "2024-12-03",
+              "rating": 4.6
+            }
+          ]
+        },
+        {
+          "id": "yin",
+          "name": "Инь йога",
+          "icon": "fa-moon",
+          "description": "Медленная практика с длительными удержаниями",
+          "programs": [
+            {
+              "id": "yin-relax",
+              "name": "Инь для релаксации",
+              "description": "Глубокая растяжка и расслабление соединительных тканей",
+              "url": "workouts/yoga/yin/relax.json",
+              "difficulty": "easy",
+              "level": "beginner",
+              "duration": 40,
+              "durationDisplay": "40 минут",
+              "exercisesCount": 10,
+              "equipment": "коврик, болстер, одеяло",
+              "calories": 120,
+              "focusAreas": ["гибкость", "расслабление", "восстановление"],
+              "tags": ["йога", "релакс", "вечер"],
+              "created": "2024-11-28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "specialized",
+      "name": "Специализированные",
+      "icon": "fa-star",
+      "description": "Тренировки для конкретных целей и групп",
+      "color": "#f9c74f",
+      "folders": [
+        {
+          "id": "rehabilitation",
+          "name": "Реабилитация",
+          "icon": "fa-heart",
+          "description": "Восстановительные тренировки после травм",
+          "programs": [
+            {
+              "id": "back-rehab",
+              "name": "Восстановление спины",
+              "description": "Щадящие упражнения для укрепления мышц спины",
+              "url": "workouts/specialized/rehab/back.json",
+              "difficulty": "easy",
+              "level": "beginner",
+              "duration": 25,
+              "durationDisplay": "25 минут",
+              "exercisesCount": 8,
+              "equipment": "коврик, ролик, легкие гантели",
+              "calories": 130,
+              "focusAreas": ["спина", "кора", "стабильность"],
+              "tags": ["реабилитация", "здоровье", "безопасно"],
+              "created": "2024-12-08",
+              "rating": 4.8
+            }
+          ]
+        },
+        {
+          "id": "sport-specific",
+          "name": "Спортивная специализация",
+          "icon": "fa-futbol",
+          "description": "Тренировки для конкретных видов спорта",
+          "folders": [
+            {
+              "id": "running",
+              "name": "Бег",
+              "icon": "fa-running",
+              "description": "Тренировки для бегунов",
+              "programs": [
+                {
+                  "id": "speed-work",
+                  "name": "Скоростная работа",
+                  "description": "Интервалы для развития скорости бега",
+                  "url": "workouts/specialized/sports/running/speed.json",
+                  "difficulty": "hard",
+                  "level": "advanced",
+                  "duration": 45,
+                  "durationDisplay": "45 минут",
+                  "exercisesCount": 6,
+                  "equipment": "беговая дорожка или стадион, пульсометр",
+                  "calories": 400,
+                  "focusAreas": ["ноги", "скорость", "выносливость"],
+                  "tags": ["бег", "скорость", "интервалы"],
+                  "created": "2024-12-18"
+                }
+              ]
+            },
+            {
+              "id": "climbing",
+              "name": "Скалолазание",
+              "icon": "fa-mountain",
+              "description": "Тренировки для скалолазов",
+              "programs": [
+                {
+                  "id": "finger-strength",
+                  "name": "Сила пальцев",
+                  "description": "Упражнения для развития силы хвата и пальцев",
+                  "url": "workouts/specialized/sports/climbing/fingers.json",
+                  "difficulty": "expert",
+                  "level": "expert",
+                  "duration": 35,
+                  "durationDisplay": "35 минут",
+                  "exercisesCount": 7,
+                  "equipment": "фингертборд, эспандеры, мел",
+                  "calories": 180,
+                  "focusAreas": ["предплечья", "пальцы", "хват"],
+                  "tags": ["скалолазание", "специализация", "сила"],
+                  "created": "2024-12-20",
+                  "rating": 4.9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quick",
+      "name": "Быстрые тренировки",
+      "icon": "fa-bolt",
+      "description": "Короткие тренировки для занятых людей",
+      "color": "#b794f6",
+      "programs": [
+        {
+          "id": "7min-workout",
+          "name": "7-минутная тренировка",
+          "description": "Научно обоснованная высокоинтенсивная круговая тренировка",
+          "url": "workouts/quick/7min.json",
+          "difficulty": "medium",
+          "level": "intermediate",
+          "duration": 7,
+          "durationDisplay": "7 минут",
+          "exercisesCount": 12,
+          "equipment": "стена, стул, коврик",
+          "calories": 90,
+          "focusAreas": ["все тело", "кардио", "сила"],
+          "tags": ["быстро", "дом", "научный"],
+          "created": "2024-11-15",
+          "rating": 4.7
+        },
+        {
+          "id": "lunch-break",
+          "name": "Обеденный перерыв",
+          "description": "Короткая тренировка, которую можно сделать в обед",
+          "url": "workouts/quick/lunch.json",
+          "difficulty": "easy",
+          "level": "beginner",
+          "duration": 15,
+          "durationDisplay": "15 минут",
+          "exercisesCount": 8,
+          "equipment": "никакого",
+          "calories": 110,
+          "focusAreas": ["все тело", "мобильность", "энергия"],
+          "tags": ["офис", "быстро", "без снаряжения"],
+          "created": "2024-11-22"
+        }
+      ]
+    }
+  ],
+  "programs": [
+    {
+      "name": "Классическая тренировка",
+      "description": "Базовая тренировка в старом формате для обратной совместимости",
+      "url": "workouts/classic.json",
+      "category": "Общая",
+      "difficulty": "medium",
+      "duration": "30 минут",
+      "exercisesCount": 10
+    }
+  ]
+}

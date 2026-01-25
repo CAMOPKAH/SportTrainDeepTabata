@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔥 Таймер Функциональной Тренировки</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="keep-alive-info" id="keepAliveInfo">
+        <i class="fas fa-bolt"></i> Экран активен <span class="pulse"></span>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Функциональный Жиросжигатель</h1>
+            <button class="fullscreen-btn" id="fullscreenBtn" title="Полноэкранный режим">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
+        
+        <div class="subtitle">Таймер тренировки с голосовыми оповещениями</div>
+        
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="selectProgramBtn">Программа:</label>
+                <button class="action-btn secondary" id="selectProgramBtn">
+                    <i class="fas fa-list"></i> Выбрать программу
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <label for="circles">Количество кругов:</label>
+                <select id="circles">
+                    <option value="3">3 круга</option>
+                    <option value="4">4 круга</option>
+                    <option value="5" selected>5 кругов</option>
+                    <option value="6">6 кругов</option>
+                    <option value="7">7 кругов</option>
+                    <option value="8">8 кругов</option>
+                    <option value="9">9 кругов</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button class="action-btn" id="startBtn">
+                    <i class="fas fa-play"></i> Старт
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <button class="action-btn" id="pauseBtn" disabled>
+                    <i class="fas fa-pause"></i> Пауза
+                </button>
+            </div>
+            
+            <div class="control-group">
+                <button class="action-btn" id="resetBtn">
+                    <i class="fas fa-redo"></i> Сброс
+                </button>
+            </div>
+            
+            <div class="volume-control">
+                <i class="fas fa-volume-up"></i>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1" class="volume-slider">
+                <span id="volumeValue" class="volume-value">100%</span>
+            </div>
+        </div>
+        
+        <div class="timer-display">
+            <div class="time" id="timer">45</div>
+            <div class="exercise-info" id="exerciseName">Джамп джек</div>
+            <div class="phase-info" id="phase">Работа</div>
+            <div class="circle-info" id="circleInfo">Круг: 1/5</div>
+            
+            <div class="exercise-details">
+                <div class="next-exercise" id="nextExercise">
+                    Далее: <span id="nextExerciseName">Подтягивания</span>
+                </div>
+                <div class="technique" id="technique">
+                    Прыжки с одновременным разведением рук и ног. Держите спину прямой.
+                </div>
+                <button class="hint-toggle" id="hintToggle">
+                    <i class="fas fa-bullhorn"></i> Озвучить технику
+                </button>
+            </div>
+        </div>
+        
+        <div class="status" id="status">Готов к началу тренировки</div>
+        
+        <div class="workout-list">
+            <h3>Упражнения в круге:</h3>
+            <div id="exercisesList"></div>
+        </div>
+    </div>
+    
+    <!-- Плавающая панель управления для полноэкранного режима -->
+    <div class="floating-controls">
+        <button class="action-btn" id="startBtnMobile">
+            <i class="fas fa-play"></i> Старт
+        </button>
+        <button class="action-btn" id="pauseBtnMobile" disabled>
+            <i class="fas fa-pause"></i> Пауза
+        </button>
+        <button class="action-btn" id="resetBtnMobile">
+            <i class="fas fa-redo"></i> Сброс
+        </button>
+    </div>
+
+    <!-- Подключение модулей JavaScript в правильном порядке -->
+    <script src="js/config.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/display.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/workout.js"></script>
+    <script src="js/programLoader.js"></script>
+    <script src="js/programSelector.js"></script>
+    <script src="js/fullscreen.js"></script>
+    <script src="js/wakeLock.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

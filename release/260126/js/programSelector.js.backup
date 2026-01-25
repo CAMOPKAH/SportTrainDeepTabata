@@ -1,0 +1,522 @@
+// ================= UI ВЫБОРА ПРОГРАММ ИЗ КАТАЛОГА =================
+
+let catalogData = null;
+let currentProgram = null;
+let currentFolderPath = [{ id: 'root', name: 'Все программы', icon: 'fa-home' }];
+let currentFolderId = 'root';
+
+// Создание модального окна для выбора программ
+function createProgramSelectorModal() {
+    const modal = document.createElement('div');
+    modal.id = 'programSelectorModal';
+    modal.className = 'program-selector-modal';
+    modal.innerHTML = `
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <button class="breadcrumb-btn" data-folder-id="root">
+                        <i class="fas fa-home"></i> Все программы
+                    </button>
+                </div>
+                <h2 id="modalTitle">Выберите программу тренировки</h2>
+                <button class="modal-close" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-search">
+                <input type="text" id="programSearch" placeholder="Поиск программы..." autocomplete="off">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="modal-body">
+                <div class="folders-grid" id="foldersGrid"></div>
+                <div class="programs-grid" id="programsGrid">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i> Загрузка программ...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn secondary" id="cancelSelectBtn">Отмена</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Обработчики закрытия модального окна
+    const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+    
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelSelectBtn').addEventListener('click', closeModal);
+    modal.querySelector('.modal-overlay').addEventListener('click', closeModal);
+    
+    // Поиск программ
+    const searchInput = document.getElementById('programSearch');
+    searchInput.addEventListener('input', (e) => {
+        filterPrograms(e.target.value);
+    });
+    
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
+// Отображение содержимого текущей папки
+function displayCurrentFolder() {
+    const foldersGrid = document.getElementById('foldersGrid');
+    const programsGrid = document.getElementById('programsGrid');
+    
+    foldersGrid.innerHTML = '';
+    programsGrid.innerHTML = '';
+    
+    // Получаем текущую папку
+    const currentFolder = getCurrentFolder();
+    
+    // Обновляем хлебные крошки
+    updateBreadcrumbs();
+    
+    // Обновляем заголовок
+    document.getElementById('modalTitle').textContent = currentFolder.name || 'Выберите программу тренировки';
+    
+    // Отображаем подпапки
+    if (currentFolder.folders && currentFolder.folders.length > 0) {
+        displayFolders(currentFolder.folders);
+        foldersGrid.style.display = 'grid';
+    } else {
+        foldersGrid.style.display = 'none';
+    }
+    
+    // Отображаем программы
+    if (currentFolder.programs && currentFolder.programs.length > 0) {
+        displayPrograms(currentFolder.programs);
+        programsGrid.style.display = 'grid';
+    } else {
+        programsGrid.innerHTML = '<div class="no-programs">В этой папке нет программ</div>';
+        programsGrid.style.display = 'block';
+    }
+}
+
+// Получение текущей папки по ID
+function getCurrentFolder() {
+    if (currentFolderId === 'root') {
+        // Корневая папка - все программы и папки верхнего уровня
+        return {
+            id: 'root',
+            name: 'Все программы',
+            icon: 'fa-home',
+            folders: catalogData.folders || [],
+            programs: catalogData.flatPrograms || []
+        };
+    }
+    
+    // Ищем папку в древовидной структуре
+    return findFolderById(catalogData.folders || [], currentFolderId);
+}
+
+// Поиск папки по ID
+function findFolderById(folders, folderId) {
+    for (const folder of folders) {
+        if (folder.id === folderId) {
+            return folder;
+        }
+        
+        if (folder.folders) {
+            const found = findFolderById(folder.folders, folderId);
+            if (found) return found;
+        }
+    }
+    
+    return null;
+}
+
+// Обновление хлебных крошек
+function updateBreadcrumbs() {
+    const breadcrumbsContainer = document.getElementById('breadcrumbs');
+    breadcrumbsContainer.innerHTML = '';
+    
+    currentFolderPath.forEach((folder, index) => {
+        const breadcrumb = document.createElement('button');
+        breadcrumb.className = 'breadcrumb-btn';
+        breadcrumb.dataset.folderId = folder.id;
+        
+        if (index === currentFolderPath.length - 1) {
+            breadcrumb.classList.add('active');
+        }
+        
+        breadcrumb.innerHTML = `
+            ${folder.icon ? `<i class="fas ${folder.icon}"></i>` : ''}
+            ${folder.name}
+        `;
+        
+        breadcrumb.addEventListener('click', () => {
+            navigateToFolder(folder.id);
+        });
+        
+        breadcrumbsContainer.appendChild(breadcrumb);
+        
+        // Добавляем разделитель (кроме последнего)
+        if (index < currentFolderPath.length - 1) {
+            const separator = document.createElement('span');
+            separator.className = 'breadcrumb-separator';
+            separator.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            breadcrumbsContainer.appendChild(separator);
+        }
+    });
+}
+
+// Навигация к папке
+function navigateToFolder(folderId) {
+    // Обновляем текущий путь
+    if (folderId === 'root') {
+        currentFolderPath = [{ id: 'root', name: 'Все программы', icon: 'fa-home' }];
+        currentFolderId = 'root';
+    } else {
+        // Находим путь к целевой папке
+        const path = getFolderPathTo(folderId);
+        if (path.length > 0) {
+            currentFolderPath = path;
+            currentFolderId = folderId;
+        }
+    }
+    
+    // Отображаем содержимое папки
+    displayCurrentFolder();
+}
+
+// Получение пути к папке
+function getFolderPathTo(folderId, folders = catalogData.folders, currentPath = [{ id: 'root', name: 'Все программы', icon: 'fa-home' }]) {
+    for (const folder of folders) {
+        if (folder.id === folderId) {
+            return [...currentPath, { id: folder.id, name: folder.name, icon: folder.icon }];
+        }
+        
+        if (folder.folders) {
+            const path = getFolderPathTo(folderId, folder.folders, [...currentPath, { id: folder.id, name: folder.name, icon: folder.icon }]);
+            if (path.length > 0) return path;
+        }
+    }
+    
+    return [];
+}
+
+// Отображение папок
+function displayFolders(folders) {
+    const grid = document.getElementById('foldersGrid');
+    
+    folders.forEach(folder => {
+        const folderCard = document.createElement('div');
+        folderCard.className = 'folder-card';
+        folderCard.dataset.folderId = folder.id;
+        
+        folderCard.innerHTML = `
+            <div class="folder-card-icon">
+                <i class="fas ${folder.icon || 'fa-folder'}"></i>
+            </div>
+            <div class="folder-card-content">
+                <h3>${folder.name || 'Без названия'}</h3>
+                ${folder.description ? `<p class="folder-description">${folder.description}</p>` : ''}
+                ${folder.programs ? `<div class="folder-info"><i class="fas fa-dumbbell"></i> ${folder.programs.length} программ</div>` : ''}
+            </div>
+            <div class="folder-card-arrow">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        `;
+        
+        folderCard.addEventListener('click', () => {
+            navigateToFolder(folder.id);
+        });
+        
+        grid.appendChild(folderCard);
+    });
+}
+
+// Отображение программ в виде карточек
+function displayPrograms(programs) {
+    const grid = document.getElementById('programsGrid');
+    grid.innerHTML = '';
+    
+    programs.forEach((program, index) => {
+        const card = document.createElement('div');
+        card.className = 'program-card';
+        if (currentProgram && currentProgram.url === program.url) {
+            card.classList.add('active');
+        }
+        
+        // Собираем информацию о программе с новыми полями
+        const programInfo = [];
+        
+        if (program.exercisesCount) {
+            programInfo.push(`<div class="program-info"><i class="fas fa-dumbbell"></i> ${program.exercisesCount} упражнений</div>`);
+        }
+        
+        if (program.duration || program.durationDisplay) {
+            const duration = program.durationDisplay || `${program.duration} минут`;
+            programInfo.push(`<div class="program-info"><i class="fas fa-clock"></i> ${duration}</div>`);
+        }
+        
+        if (program.equipment) {
+            programInfo.push(`<div class="program-info"><i class="fas fa-tools"></i> ${program.equipment.split(',').slice(0, 2).join(', ')}${program.equipment.split(',').length > 2 ? '...' : ''}</div>`);
+        }
+        
+        card.innerHTML = `
+            <div class="program-card-header">
+                <h3>${program.name || 'Без названия'}</h3>
+                ${program.category ? `<span class="program-category">${program.category}</span>` : ''}
+                ${program.folderName ? `<span class="program-folder"><i class="fas ${program.folderIcon || 'fa-folder'}"></i> ${program.folderName}</span>` : ''}
+            </div>
+            <div class="program-card-body">
+                <p class="program-description">${program.description || 'Описание отсутствует'}</p>
+                <div class="program-info-grid">
+                    ${programInfo.join('')}
+                </div>
+                ${program.difficulty ? `<div class="program-difficulty difficulty-${program.difficulty.toLowerCase()}">${getDifficultyText(program.difficulty)}</div>` : ''}
+                ${program.level ? `<div class="program-level level-${program.level.toLowerCase()}">${getLevelText(program.level)}</div>` : ''}
+            </div>
+            <div class="program-card-footer">
+                <button class="action-btn program-select-btn" data-program-id="${program.id || index}">
+                    <i class="fas fa-check"></i> Выбрать
+                </button>
+            </div>
+        `;
+        
+        grid.appendChild(card);
+    });
+    
+    // Обработчики выбора программы
+    document.querySelectorAll('.program-select-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const programId = e.target.closest('.program-select-btn').dataset.programId;
+            
+            // Находим программу по ID или индексу
+            let selectedProgram;
+            if (programId) {
+                selectedProgram = findProgramById(programId);
+            }
+            
+            // Если не нашли по ID, ищем в текущей папке
+            if (!selectedProgram) {
+                const currentFolder = getCurrentFolder();
+                const programIndex = parseInt(programId);
+                if (!isNaN(programIndex) && currentFolder.programs && currentFolder.programs[programIndex]) {
+                    selectedProgram = currentFolder.programs[programIndex];
+                }
+            }
+            
+            if (selectedProgram) {
+                await selectProgram(selectedProgram);
+                document.getElementById('programSelectorModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+}
+
+// Поиск программы по ID
+function findProgramById(programId) {
+    return (catalogData.flatPrograms || []).find(p => p.id === programId);
+}
+
+// Фильтрация программ по поисковому запросу
+function filterPrograms(searchQuery) {
+    if (!catalogData || !catalogData.flatPrograms) return;
+    
+    const query = searchQuery.toLowerCase().trim();
+    
+    if (query) {
+        // Режим поиска - показываем только результаты поиска
+        const filtered = catalogData.flatPrograms.filter(program => {
+            const name = (program.name || '').toLowerCase();
+            const description = (program.description || '').toLowerCase();
+            const category = (program.category || '').toLowerCase();
+            const equipment = (program.equipment || '').toLowerCase();
+            const folderName = (program.folderName || '').toLowerCase();
+            
+            return name.includes(query) || 
+                   description.includes(query) || 
+                   category.includes(query) ||
+                   equipment.includes(query) ||
+                   folderName.includes(query);
+        });
+        
+        // Скрываем папки и показываем только результаты поиска
+        document.getElementById('foldersGrid').style.display = 'none';
+        document.getElementById('modalTitle').textContent = `Результаты поиска: "${query}"`;
+        
+        displaySearchResults(filtered);
+    } else {
+        // Выход из режима поиска - показываем текущую папку
+        document.getElementById('foldersGrid').style.display = 'grid';
+        displayCurrentFolder();
+    }
+}
+
+// Отображение результатов поиска
+function displaySearchResults(programs) {
+    const grid = document.getElementById('programsGrid');
+    grid.innerHTML = '';
+    
+    if (!programs || programs.length === 0) {
+        grid.innerHTML = '<div class="no-programs">Программы не найдены</div>';
+        return;
+    }
+    
+    programs.forEach((program, index) => {
+        const card = document.createElement('div');
+        card.className = 'program-card';
+        if (currentProgram && currentProgram.url === program.url) {
+            card.classList.add('active');
+        }
+        
+        // Собираем информацию о программе с новыми полями
+        const programInfo = [];
+        
+        if (program.exercisesCount) {
+            programInfo.push(`<div class="program-info"><i class="fas fa-dumbbell"></i> ${program.exercisesCount} упражнений</div>`);
+        }
+        
+        if (program.duration || program.durationDisplay) {
+            const duration = program.durationDisplay || `${program.duration} минут`;
+            programInfo.push(`<div class="program-info"><i class="fas fa-clock"></i> ${duration}</div>`);
+        }
+        
+        if (program.folderName) {
+            programInfo.push(`<div class="program-info"><i class="fas ${program.folderIcon || 'fa-folder'}"></i> ${program.folderName}</div>`);
+        }
+        
+        card.innerHTML = `
+            <div class="program-card-header">
+                <h3>${program.name || 'Без названия'}</h3>
+                ${program.category ? `<span class="program-category">${program.category}</span>` : ''}
+            </div>
+            <div class="program-card-body">
+                <p class="program-description">${program.description || 'Описание отсутствует'}</p>
+                <div class="program-info-grid">
+                    ${programInfo.join('')}
+                </div>
+                ${program.difficulty ? `<div class="program-difficulty difficulty-${program.difficulty.toLowerCase()}">${getDifficultyText(program.difficulty)}</div>` : ''}
+                ${program.level ? `<div class="program-level level-${program.level.toLowerCase()}">${getLevelText(program.level)}</div>` : ''}
+            </div>
+            <div class="program-card-footer">
+                <button class="action-btn program-select-btn" data-program-id="${program.id || index}">
+                    <i class="fas fa-check"></i> Выбрать
+                </button>
+            </div>
+        `;
+        
+        grid.appendChild(card);
+    });
+    
+    // Обработчики выбора программы
+    document.querySelectorAll('.program-select-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const programId = e.target.closest('.program-select-btn').dataset.programId;
+            const selectedProgram = findProgramById(programId) || programs[parseInt(programId)];
+            
+            if (selectedProgram) {
+                await selectProgram(selectedProgram);
+                document.getElementById('programSelectorModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+}
+
+// Выбор программы
+async function selectProgram(program) {
+    currentProgram = program;
+    const statusElement = document.getElementById('status');
+    statusElement.textContent = 'Загрузка программы...';
+    statusElement.style.color = '#4cc9f0';
+    
+    await loadProgram(program);
+    
+    // Обновляем кнопку выбора программы
+    updateProgramSelectButton();
+}
+
+// Обновление кнопки выбора программы
+function updateProgramSelectButton() {
+    const btn = document.getElementById('selectProgramBtn');
+    if (btn && currentProgram) {
+        btn.innerHTML = `<i class="fas fa-check-circle"></i> ${currentProgram.name}`;
+        btn.classList.add('has-program');
+    } else if (btn) {
+        btn.innerHTML = '<i class="fas fa-list"></i> Выбрать программу';
+        btn.classList.remove('has-program');
+    }
+}
+
+// Получение текста сложности
+function getDifficultyText(difficulty) {
+    const difficultyMap = {
+        'easy': 'Легкая',
+        'medium': 'Средняя',
+        'hard': 'Сложная',
+        'expert': 'Эксперт'
+    };
+    return difficultyMap[difficulty.toLowerCase()] || difficulty;
+}
+
+// Получение текста уровня
+function getLevelText(level) {
+    const levelMap = {
+        'beginner': 'Начинающий',
+        'easy': 'Легкий',
+        'intermediate': 'Средний',
+        'medium': 'Средний',
+        'advanced': 'Продвинутый',
+        'hard': 'Сложный',
+        'expert': 'Эксперт'
+    };
+    return levelMap[level.toLowerCase()] || level;
+}
+
+// Открытие модального окна выбора программ
+async function openProgramSelector() {
+    const modal = document.getElementById('programSelectorModal');
+    if (!modal) {
+        createProgramSelectorModal();
+    }
+    
+    const modalElement = document.getElementById('programSelectorModal');
+    
+    // Загружаем каталог, если еще не загружен
+    if (!catalogData) {
+        const grid = document.getElementById('programsGrid');
+        grid.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Загрузка программ...</div>';
+        
+        catalogData = await loadCatalog();
+        
+        if (!catalogData) {
+            grid.innerHTML = '<div class="no-programs">Ошибка загрузки каталога</div>';
+            return;
+        }
+    }
+    
+    // Сбрасываем поиск и навигацию
+    document.getElementById('programSearch').value = '';
+    currentFolderPath = [{ id: 'root', name: 'Все программы', icon: 'fa-home' }];
+    currentFolderId = 'root';
+    
+    // Отображаем текущую папку (корневую)
+    displayCurrentFolder();
+    
+    // Показываем модальное окно
+    modalElement.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Инициализация селектора программ
+function initProgramSelector() {
+    // Создаем модальное окно (скрытое)
+    createProgramSelectorModal();
+    
+    // Обновляем кнопку выбора программы
+    updateProgramSelectButton();
+}

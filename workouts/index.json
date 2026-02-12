@@ -11,6 +11,12 @@
       "name": "Предел: Перезагрузка Тела",
       "description": "Высокоинтенсивная кардио-тренировка для выносливости.",
       "url": "https://raw.githubusercontent.com/CAMOPKAH/SportTrainDeepTabata/main/workouts/Aba.json"
+    }, 
+    {
+      "id": "cardio-blast",
+      "name": "Солнце, мотивато",
+      "description": "Высокоинтенсивная кардио-тренировка для выносливости.",
+      "url": "https://raw.githubusercontent.com/CAMOPKAH/SportTrainDeepTabata/main/workouts/sun.json"
     }
   
   ]
